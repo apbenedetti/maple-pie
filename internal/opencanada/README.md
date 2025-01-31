@@ -1,8 +1,8 @@
 # Open Canada Tool
 
-This directory contains source code for the "Open Canada Tool" used to interact with the Government of Canada's "Open Government" portal.
+This directory contains source code for the "Open Canada" (`opencanada`) package used to interact with the Government of Canada's "Open Government" portal.
 
-The intent is for this tool to perform as a medium between a frontend and the Government of Canada's "Open Government" portal.
+The intent is for this package to perform as a medium between a frontend and the Government of Canada's "Open Government" portal.
 
 <!--
 This Attribution Statement will need to be printed on any website using the tool:
