@@ -20,9 +20,9 @@ jobs:
       - name: Build Binary
         run: |
           mkdir -p dist
-          GOOS=windows GOARCH=amd64 go build -o dist/maplepie.exe ./cmd/maple-pie-server
-          GOOS=linux GOARCH=amd64 go build -o dist/maplepie-linux ./cmd/maple-pie-server
-          GOOS=darwin GOARCH=amd64 go build -o dist/maplepie-macos ./cmd/maple-pie-server
+          GOOS=windows GOARCH=amd64 go build -o dist/maplepie.exe ./cmd/maple-pie
+          GOOS=linux GOARCH=amd64 go build -o dist/maplepie-linux ./cmd/maple-pie
+          GOOS=darwin GOARCH=amd64 go build -o dist/maplepie-macos ./cmd/maple-pie
 
       - name: Prepare ZIP
         run: |

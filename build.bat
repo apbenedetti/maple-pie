@@ -9,7 +9,7 @@ if not exist build (
 )
 
 REM Build the Go binary
-go build -o build\maplepie.exe ./cmd/maple-pie-server
+go build -o build\maplepie.exe ./cmd/maple-pie
 
 if %ERRORLEVEL% NEQ 0 (
     echo Build failed!

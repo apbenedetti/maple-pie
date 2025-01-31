@@ -7,7 +7,7 @@ fi
 
 echo "Building Maple Pie..."
 
-go build -o build/maplepie cmd/maple-pie-server/main.go
+go build -o build/maplepie cmd/maple-pie/main.go
 
 chmod +x build/maplepie
 
