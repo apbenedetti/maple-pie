@@ -1,0 +1,60 @@
+name: Lint and Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint Go Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.5'
+
+      - name: Install golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: v2.1
+        continue-on-error: true # ⚠️ allows linter to fail without failing the job
+
+  build:
+    name: Build Artifacts
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.5'
+
+      - name: Build Binary
+        run: |
+          mkdir -p dist
+          GOOS=windows GOARCH=amd64 go build -o dist/maplepie.exe ./cmd/maple-pie-server
+          GOOS=linux GOARCH=amd64 go build -o dist/maplepie-linux ./cmd/maple-pie-server
+          GOOS=darwin GOARCH=amd64 go build -o dist/maplepie-macos ./cmd/maple-pie-server
+
+      - name: Prepare ZIP
+        run: |
+          cp scripts/launch_me.bat dist/
+          cp scripts/launch_me.sh dist/
+
+          cd dist
+          zip maplepie-windows.zip maplepie.exe launch_me.bat
+          zip maplepie-linux.zip maplepie-linux launch_me.sh
+          zip maplepie-macos.zip maplepie-macos launch_me.sh
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: maplepie-binaries
+          path: dist/*.zip

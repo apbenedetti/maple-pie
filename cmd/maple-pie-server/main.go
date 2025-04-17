@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/apbenedetti/maple-pie/cmd/opencanada"
+	"github.com/apbenedetti/maple-pie/internal/opencanada"
 )
 
 func main() {
