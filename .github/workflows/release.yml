@@ -1,13 +1,14 @@
 
-name: Create GitHub Release
+name: Release
 
 on:
   push:
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
 
 jobs:
   release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
