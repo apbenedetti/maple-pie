@@ -1,13 +1,13 @@
 package opencanada
 
 import (
+	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 )
 
-func ShowPackageMetadata(package_id string) string {
+func ShowPackageMetadata(package_id string) interface{} {
 
 	// TODO: take in dataset title and perform lookup against datasets.json
 	// TODO: datasets.json should be exposed to a frontend as an options list; might require moving
@@ -15,12 +15,12 @@ func ShowPackageMetadata(package_id string) string {
 	return action("package_show", "id", package_id)
 }
 
-func SearchDataStoreResource(resource_id string) string {
+func SearchDataStoreResource(resource_id string) interface{} {
 
 	return action("datastore_search", "resource_id", resource_id)
 }
 
-func action(args ...string) string {
+func action(args ...string) interface{} {
 
 	// TODO: need size handling for args
 	// TODO: additional kv pair filters can be accepted, join each additional pair as "&key=value"
@@ -40,14 +40,11 @@ func action(args ...string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
-
-	if err != nil {
+	var parsed interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&parsed); err != nil {
 		log.Fatal(err)
 	}
-
-	return string(body[:])
+	return parsed
 }
